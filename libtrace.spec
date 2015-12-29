@@ -7,11 +7,20 @@ License: GPL
 URL: http://research.wand.net.nz/software/libtrace.php
 Name: %{name}
 Version: %{version}
-Release: 2%{?dist}
+Release: 3%{?dist}
 Source: http://research.wand.net.nz/software/libtrace/%{name}-%{version}.tar.bz2
 Prefix: /usr
 Group: System/Libraries
-BuildRequires: gcc-c++ libpcap-devel doxygen zlib-devel lzo-devel bzip2-devel ncurses-devel
+BuildRequires: bison
+BuildRequires: bzip2-devel
+BuildRequires: doxygen
+BuildRequires: flex
+BuildRequires: gcc-c++
+BuildRequires: libpcap-devel
+BuildRequires: lzo-devel
+BuildRequires: make
+BuildRequires: ncurses-devel
+BuildRequires: zlib-devel
 
 %description
 libtrace is a library for trace processing. It supports multiple input methods, including device capture, raw and gz-compressed trace, and sockets; and mulitple input formats, including pcap and DAG.
@@ -37,6 +46,11 @@ Helper utilities for use with the libtrace process library.
 
 %build
 ./configure --prefix %{_prefix} --libdir=%{_libdir}
+
+# https://fedoraproject.org/wiki/RPath_Packaging_Draft
+sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
+sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
+
 make %{?_smp_mflags}
 
 %install
@@ -68,6 +82,9 @@ rm -rf %{buildroot}
 %{_mandir}/man1/*
 
 %changelog
+* Thu Dec 24 2015 John Siegrist <john@complects.com> - 3.0.22-3
+- Added missing BuildRequires dependencies.
+
 * Sat Aug 29 2015 John Siegrist <jsiegrist@iix.net> - 3.0.22-2
 - Added the dist macro to the Release version.
 
