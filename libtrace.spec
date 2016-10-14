@@ -1,26 +1,27 @@
 %define name libtrace
-%define version 3.0.22
+%define version 4.0.0
 
-BuildRoot: %{_tmppath}/%{name}-%{version}-build
 Summary: libtrace is a library for trace processing
 License: GPL
 URL: http://research.wand.net.nz/software/libtrace.php
 Name: %{name}
 Version: %{version}
-Release: 3%{?dist}
-Source: http://research.wand.net.nz/software/libtrace/%{name}-%{version}.tar.bz2
+Release: 1%{?dist}
+Source: http://research.wand.net.nz/software/libtrace/libtrace-4.0.0.tar.bz2
 Prefix: /usr
 Group: System/Libraries
+BuildRequires: autoconf
+BuildRequires: automake
 BuildRequires: bison
-BuildRequires: bzip2-devel
 BuildRequires: doxygen
 BuildRequires: flex
+BuildRequires: gcc
 BuildRequires: gcc-c++
 BuildRequires: libpcap-devel
-BuildRequires: lzo-devel
 BuildRequires: make
 BuildRequires: ncurses-devel
-BuildRequires: zlib-devel
+BuildRequires: openssl-devel
+BuildRequires: libwandio-devel
 
 %description
 libtrace is a library for trace processing. It supports multiple input methods, including device capture, raw and gz-compressed trace, and sockets; and mulitple input formats, including pcap and DAG.
@@ -82,6 +83,9 @@ rm -rf %{buildroot}
 %{_mandir}/man1/*
 
 %changelog
+* Fri Oct 14 2016 John Siegrist <john@complects.com> - 4.0.0-1
+- Update package version to 4.0.0.
+
 * Thu Dec 24 2015 John Siegrist <john@complects.com> - 3.0.22-3
 - Added missing BuildRequires dependencies.
 
